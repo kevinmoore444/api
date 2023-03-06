@@ -1,26 +1,20 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
-
-const FetchApi = () => {
+const AxiosCrypto = () => {
     const [coins, setCoins] = useState([])
 
     const fetchData = () => {
-        fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false")
-        // How we handle the data
+        axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false")
         .then((response) => {
-            // console.log(response)
-            return response.json()
+            console.log(response.data);
+            setCoins(response.data);
         })
-        .then((response) => {
-            console.log(response)
-            setCoins(response)
-        })
-
-        // What happens if call is rejected
         .catch((error) => {
-            console.log("This is a catch error", error)
+            console.log(error)
+
         })
-        console.log("I'm doing my other task while waiting for my response")
+        console.log("I'm running before our promise gives me data")
     }
 
 
@@ -44,4 +38,4 @@ const FetchApi = () => {
   )
 }
 
-export default FetchApi
+export default AxiosCrypto
